@@ -2,4 +2,5 @@
 // import "./SkyboxApp"
 // import "./FramebufferPickerApp"
 // import "./ShadowMapApp"
-import "./CascadeShadowMapApp"
+// import "./CascadeShadowMapApp"
+import "./OminiShadowMapApp"

@@ -1,13 +1,10 @@
 import {
     Vector3,
-    Script,
-    PointLight,
     WebGPUEngine,
     Camera,
     MeshRenderer,
     PrimitiveMesh,
     BlinnPhongMaterial,
-    SpotLight,
     DirectLight,
     RenderFace
 } from "arche-engine";
