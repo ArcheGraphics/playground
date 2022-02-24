@@ -29,6 +29,7 @@ engine.init().then(() => {
                 type: AssetType.TextureCube
             }
         )
+        // @ts-ignore
         .then((cubeMap) => {
             const skybox = new SkyboxSubpass(engine);
             skybox.createCuboid();
@@ -61,6 +62,7 @@ engine.init().then(() => {
     renderer.mesh = PrimitiveMesh.createCuboid(engine, 1);
     engine.resourceManager
         .load<SampledTexture2D>("http://192.168.31.204:8000/Textures/wood.png")
+        // @ts-ignore
         .then((texture) => {
             const unlit = new BlinnPhongMaterial(engine)
             unlit.baseTexture = texture;

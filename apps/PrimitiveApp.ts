@@ -60,6 +60,7 @@ engine.init().then(() => {
 
     engine.resourceManager
         .load<SampledTexture2D>("http://192.168.31.204:8000/Textures/wood.png")
+        // @ts-ignore
         .then((texture) => {
             const unlit = new BlinnPhongMaterial(engine)
             unlit.baseTexture = texture;
