@@ -15,11 +15,11 @@ import {OrbitControl} from "@arche-engine/controls";
 import {Color} from "@arche-engine/math";
 
 class lightMovement extends Script {
-    speed = 1;
+    speed = 5;
     totalTime = 0;
 
     onUpdate(deltaTime: number) {
-        this.totalTime += deltaTime;
+        this.totalTime += deltaTime/1000;
         this.totalTime = this.totalTime % 100;
         this.entity.transform.setPosition(10 * Math.sin(this.speed * this.totalTime), 10, 10 * Math.cos(this.speed * this.totalTime));
         this.entity.transform.lookAt(new Vector3(0, 0, 0));
@@ -31,7 +31,7 @@ class lightMovementReverse extends Script {
     totalTime = 0;
 
     onUpdate(deltaTime: number) {
-        this.totalTime += deltaTime;
+        this.totalTime += deltaTime/1000;
         this.totalTime = this.totalTime % 100;
         this.entity.transform.setPosition(10 * Math.cos(this.speed * this.totalTime), 10, 10 * Math.sin(this.speed * this.totalTime));
         this.entity.transform.lookAt(new Vector3(0, 0, 0));
@@ -42,9 +42,6 @@ const engine = new WebGPUEngine("canvas");
 engine.canvas.resizeByClientSize();
 engine.init().then(() => {
     const scene = engine.sceneManager.activeScene;
-    const diffuseSolidColor = scene.ambientLight.diffuseSolidColor;
-    diffuseSolidColor.setValue(0.5, 0.5, 0.5, 1);
-    scene.ambientLight.diffuseSolidColor = diffuseSolidColor;
     const rootEntity = scene.createRootEntity();
 
     // init camera
