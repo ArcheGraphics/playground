@@ -87,8 +87,8 @@ engine.init().then(() => {
         const bakerRenderer = bakerEntity.addComponent(MeshRenderer);
         bakerRenderer.mesh = PrimitiveMesh.createPlane(engine, 2, 2);
         bakerRenderer.setMaterial(bakerMaterial);
-        planes[i] = bakerEntity;
-        planeMaterials[i] = bakerMaterial;
+        planes.push(bakerEntity);
+        planeMaterials.push(bakerMaterial);
     }
 
     planes[0].transform.setPosition(1, 0, 0); // PX
