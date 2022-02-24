@@ -1,3 +1,4 @@
 // import "./PrimitiveApp";
 // import "./SkyboxApp"
-import "./FramebufferPickerApp"
+// import "./FramebufferPickerApp"
+import "./ShadowMapApp"
