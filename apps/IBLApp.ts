@@ -63,6 +63,22 @@ engine.init().then(() => {
     const materialIndex = 0;
     const mat = materials[materialIndex];
 
+    const sphere = PrimitiveMesh.createSphere(engine, 0.5, 30);
+    for (let i = 0; i < 7; i++) {
+        for (let j = 0; j < 7; j++) {
+            const sphereEntity = rootEntity.createChild("SphereEntity" + i.toString() + j.toString());
+            sphereEntity.transform.setPosition(i - 3, j - 3, 0);
+            const sphereMtl = new PBRMaterial(engine);
+            sphereMtl.setBaseColor(mat.baseColor);
+            sphereMtl.metallic = MathUtil.clamp(i / (7 - 1), 0.1, 1.0);
+            sphereMtl.roughness = MathUtil.clamp(j / (7 - 1), 0.05, 1.0);
+
+            const sphereRenderer = sphereEntity.addComponent(MeshRenderer);
+            sphereRenderer.mesh = sphere;
+            sphereRenderer.setMaterial(sphereMtl);
+        }
+    }
+
     engine.resourceManager
         .load<SampledTextureCube>({
                 urls: [
@@ -84,23 +100,7 @@ engine.init().then(() => {
             skybox.createCuboid();
             skybox.textureCubeMap = cubeMap;
             engine.defaultRenderPass.addSubpass(skybox);
+
+            engine.run();
         })
-
-    const sphere = PrimitiveMesh.createSphere(engine, 0.5, 30);
-    for (let i = 0; i < 7; i++) {
-        for (let j = 0; j < 7; j++) {
-            const sphereEntity = rootEntity.createChild("SphereEntity" + i.toString() + j.toString());
-            sphereEntity.transform.setPosition(i - 3, j - 3, 0);
-            const sphereMtl = new PBRMaterial(engine);
-            sphereMtl.setBaseColor(mat.baseColor);
-            sphereMtl.metallic = MathUtil.clamp(i / (7 - 1), 0.1, 1.0);
-            sphereMtl.roughness = MathUtil.clamp(j / (7 - 1), 0.05, 1.0);
-
-            const sphereRenderer = sphereEntity.addComponent(MeshRenderer);
-            sphereRenderer.mesh = sphere;
-            sphereRenderer.setMaterial(sphereMtl);
-        }
-    }
-
-    engine.run();
 });

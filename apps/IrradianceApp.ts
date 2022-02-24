@@ -123,7 +123,6 @@ engine.init().then(() => {
                 }
             };
             changeMip(0);
+            engine.run();
         })
-
-    engine.run();
 });
