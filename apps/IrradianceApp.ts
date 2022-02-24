@@ -13,6 +13,8 @@ import {
     Entity,
     SampledTextureCube,
     AssetType,
+    WGSLSkyboxDebuggerFragment,
+    WGSLSkyboxDebuggerVertex
 } from "arche-engine";
 import {OrbitControl} from "@arche-engine/controls";
 
@@ -52,6 +54,8 @@ class BakerMaterial extends BaseMaterial {
 const engine = new WebGPUEngine("canvas");
 engine.canvas.resizeByClientSize();
 engine.init().then(() => {
+    Shader.create("cubemapDebugger", new WGSLSkyboxDebuggerVertex(), new WGSLSkyboxDebuggerFragment());
+
     const scene = engine.sceneManager.activeScene;
     const rootEntity = scene.createRootEntity();
 
