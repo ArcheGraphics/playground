@@ -11,5 +11,5 @@
 // import "./OminiShadowMapApp"
 
 // import "./AtomicComputeApp"
-import "./ClusterForwardApp"
-// import "./MultiLightApp"
+// import "./ClusterForwardApp"
+import "./MultiLightApp"

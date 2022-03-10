@@ -6,7 +6,7 @@ import {
     SpotLight,
     Vector3,
     WebGPUEngine,
-    ClusterDebugMaterial,
+    BlinnPhongMaterial,
     SpriteDebug,
     Script,
     Entity
@@ -21,8 +21,8 @@ class MoveScript extends Script {
 
     constructor(entity: Entity) {
         super(entity);
-        this.pos = new Vector3(10 * Math.random(), 0, 10 * Math.random());
-        this.vel = Math.abs(Math.random() * 4);
+        this.pos = new Vector3(10 * (2 * Math.random() - 1), 0, 10 * (2 * Math.random() - 1));
+        this.vel = Math.abs(Math.random() * 16);
     }
 
     onUpdate(deltaTime: number) {
@@ -32,7 +32,7 @@ class MoveScript extends Script {
         if (this.pos.y <= -5) {
             this.velSign = 1;
         }
-        this.pos.y += deltaTime * this.vel * this.velSign;
+        this.pos.y += deltaTime / 1000 * this.vel * this.velSign;
 
         this.entity.transform.position = this.pos;
         this.entity.transform.lookAt(new Vector3(0, 0, 0));
@@ -54,7 +54,7 @@ engine.init().then(() => {
     cameraEntity.addComponent(OrbitControl);
 
     // init point light
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 50; i++) {
         const light = rootEntity.createChild("light");
         light.addComponent(MoveScript);
         const pointLight = light.addComponent(PointLight);
@@ -62,7 +62,7 @@ engine.init().then(() => {
     }
 
     // init spot light
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 50; i++) {
         const light = rootEntity.createChild("light");
         light.addComponent(MoveScript);
         const spotLight = light.addComponent(SpotLight);
@@ -72,7 +72,8 @@ engine.init().then(() => {
     // create box test entity
     const cubeSize = 20.0;
     const boxEntity = rootEntity.createChild("BoxEntity");
-    const boxMtl = new ClusterDebugMaterial(engine);
+    const boxMtl = new BlinnPhongMaterial(engine);
+    boxMtl.baseColor = new Color(0.0, 0.6, 0.3, 1.0);
     const boxRenderer = boxEntity.addComponent(MeshRenderer);
     boxRenderer.mesh = PrimitiveMesh.createPlane(engine, cubeSize, cubeSize, 100, 1000);
     boxRenderer.setMaterial(boxMtl);
