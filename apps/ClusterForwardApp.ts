@@ -6,7 +6,8 @@ import {
     SpotLight,
     Vector3,
     WebGPUEngine,
-    ClusterDebugMaterial
+    ClusterDebugMaterial,
+    SpriteDebug
 } from "arche-engine";
 import {OrbitControl} from "@arche-engine/controls";
 
@@ -15,6 +16,7 @@ engine.canvas.resizeByClientSize();
 engine.init().then(() => {
     const scene = engine.sceneManager.activeScene;
     const rootEntity = scene.createRootEntity();
+    rootEntity.addComponent(SpriteDebug);
 
     // init camera
     const cameraEntity = rootEntity.createChild("camera");
