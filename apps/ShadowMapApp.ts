@@ -55,6 +55,7 @@ engine.init().then(() => {
     const light = rootEntity.createChild("light");
     light.addComponent(lightMovement);
     const spotLight = light.addComponent(SpotLight);
+    spotLight.distance = 100;
     spotLight.intensity = 0.2;
     spotLight.enableShadow = true;
 
@@ -62,6 +63,7 @@ engine.init().then(() => {
     light2.transform.setPosition(0, 10, 0);
     light2.transform.lookAt(new Vector3(0, 0, 0), new Vector3(1, 0, 0));
     const pointLight = light2.addComponent(PointLight);
+    pointLight.distance = 100;
     pointLight.intensity = 0.2;
     pointLight.enableShadow = true;
 
