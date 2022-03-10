@@ -15,7 +15,7 @@ import {OrbitControl} from "@arche-engine/controls";
 import {Color} from "@arche-engine/math";
 
 class lightMovement extends Script {
-    speed = 5;
+    speed = 1;
     totalTime = 0;
 
     onUpdate(deltaTime: number) {

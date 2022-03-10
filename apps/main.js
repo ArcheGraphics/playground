@@ -3,9 +3,9 @@
 // import "./FramebufferPickerApp"
 
 // import "./PBRApp"
-import "./IrradianceApp"
+// import "./IrradianceApp"
 // import "./IBLApp"
 
 // import "./ShadowMapApp"
-// import "./CascadeShadowMapApp"
+import "./CascadeShadowMapApp"
 // import "./OminiShadowMapApp"

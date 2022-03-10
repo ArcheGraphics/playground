@@ -7,9 +7,11 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "vite": "^2"
+    "vite": "^2",
+    "@webgpu/types": "latest"
   },
   "dependencies": {
-    "arche-engine": "^0.0.3"
+    "arche-engine": "^0.0.5",
+    "@webgpu/types": "latest"
   }
 }
