@@ -7,5 +7,7 @@
 // import "./IBLApp"
 
 // import "./ShadowMapApp"
-import "./CascadeShadowMapApp"
+// import "./CascadeShadowMapApp"
 // import "./OminiShadowMapApp"
+
+import "./AtomicComputeApp"
