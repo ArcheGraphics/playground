@@ -1,21 +1,23 @@
 import {
-    Vector3,
-    WebGPUEngine,
+    BaseMaterial,
+    BindGroupInfo,
+    Buffer,
+    BufferUsage,
     Camera,
+    ComputePass,
+    Engine,
     MeshRenderer,
     PrimitiveMesh,
-    BaseMaterial,
-    ShaderProperty,
-    Engine,
     Shader,
-    Buffer,
-    BindGroupInfo,
-    WGSL,
     ShaderMacroCollection,
-    ComputePass,
-    WGSLUVShare,
+    ShaderProperty,
+    ShaderStage,
+    Vector3,
+    WebGPUEngine,
+    WGSL,
+    WGSLEncoder,
     WGSLUnlitVertex,
-    WGSLEncoder
+    WGSLUVShare
 } from "arche-engine";
 import {OrbitControl} from "@arche-engine/controls";
 
@@ -32,8 +34,7 @@ class WGSLAtomicFragment extends WGSL {
         this._bindGroupInfo.clear();
         const inputStructCounter = WGSLEncoder.startCounter(0);
         {
-            // @ts-ignore
-            const encoder = this.createSourceEncoder(GPUShaderStage.FRAGMENT);
+            const encoder = this.createSourceEncoder(ShaderStage.FRAGMENT);
             this._uvShare.execute(encoder, macros, inputStructCounter);
 
             encoder.addStorageBufferBinding("u_atomic", "u32", true);
@@ -58,8 +59,7 @@ class AtomicMaterial extends BaseMaterial {
 
     constructor(engine: Engine) {
         super(engine, Shader.find("atomicRender"));
-        // @ts-ignore
-        this._atomicBuffer = new Buffer(engine, 4, GPUBufferUsage.STORAGE);
+        this._atomicBuffer = new Buffer(engine, 4, BufferUsage.STORAGE);
         this.atomicBuffer = this._atomicBuffer;
     }
 
@@ -79,8 +79,7 @@ class WGSLAtomicCompute extends WGSL {
         this._source = "";
         this._bindGroupInfo.clear();
         {
-            // @ts-ignore
-            const encoder = this.createSourceEncoder(GPUShaderStage.Compute);
+            const encoder = this.createSourceEncoder(ShaderStage.COMPUTE);
             encoder.addStruct("struct Counter {\n" +
                 "counter: atomic<u32>;\n" +
                 "}\n");
@@ -100,7 +99,7 @@ class WGSLAtomicCompute extends WGSL {
 const engine = new WebGPUEngine("canvas");
 engine.canvas.resizeByClientSize();
 engine.init().then(() => {
-    Shader.create("atomicRender", new WGSLUnlitVertex(), new WGSLAtomicFragment());
+    Shader.create("atomicRender", new WGSLUnlitVertex(), ShaderStage.VERTEX, new WGSLAtomicFragment());
 
     const scene = engine.sceneManager.activeScene;
     const rootEntity = scene.createRootEntity();
@@ -118,9 +117,10 @@ engine.init().then(() => {
     const material = new AtomicMaterial(engine);
     renderer.setMaterial(material);
 
-    const _pass = new ComputePass(engine, Shader.create("atomic", new WGSLAtomicCompute(), null));
+    const _pass = new ComputePass(engine, Shader.create("atomic", new WGSLAtomicCompute(), ShaderStage.COMPUTE));
     _pass.setDispatchCount(1, 1, 1);
     _pass.attachShaderData(material.shaderData);
+    engine.computePasses.push(_pass);
 
     engine.run();
 });
