@@ -6,7 +6,8 @@ import {
     PrimitiveMesh,
     BlinnPhongMaterial,
     DirectLight,
-    RenderFace
+    RenderFace,
+    ShadowDebugMaterial
 } from "arche-engine";
 import {OrbitControl} from "@arche-engine/controls";
 import {Color} from "@arche-engine/math";
@@ -36,9 +37,9 @@ engine.init().then(() => {
     const boxMesh = PrimitiveMesh.createCuboid(engine, cubeSize, cubeSize, cubeSize);
     const boxMtl = new BlinnPhongMaterial(engine);
     boxMtl.baseColor = new Color(0.3, 0.3, 0.3, 0.5);
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 40; i++) {
         const boxEntity = rootEntity.createChild("BoxEntity");
-        boxEntity.transform.setPosition(0, 2, i * 10 - 20);
+        boxEntity.transform.setPosition(0, 2, i * 10 - 200);
 
         const boxRenderer = boxEntity.addComponent(MeshRenderer);
         boxRenderer.mesh = boxMesh;
@@ -51,9 +52,12 @@ engine.init().then(() => {
     planeMtl.baseColor = new Color(1.0, 0, 0, 1.0);
     planeMtl.renderFace = RenderFace.Double;
 
+    const shadowDebug = new ShadowDebugMaterial(engine);
+
     const planeRenderer = planeEntity.addComponent(MeshRenderer);
-    planeRenderer.mesh = PrimitiveMesh.createPlane(engine, 10, 80);
+    planeRenderer.mesh = PrimitiveMesh.createPlane(engine, 10, 400);
     planeRenderer.setMaterial(planeMtl);
+    // planeRenderer.setMaterial(shadowDebug);
     planeRenderer.receiveShadow = true;
 
     engine.run();
