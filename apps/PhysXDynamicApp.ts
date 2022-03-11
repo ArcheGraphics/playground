@@ -8,7 +8,7 @@ import {
     Layer,
     MeshRenderer,
     PlaneColliderShape,
-    PointLight,
+    SpotLight,
     PrimitiveMesh,
     Ray,
     SphereColliderShape,
@@ -46,8 +46,10 @@ PhysXPhysics.init().then(() => {
         scene.ambientLight.diffuseIntensity = 0.5;
 
         const light = rootEntity.createChild("light");
-        light.transform.position = new Vector3(0, 5, 0);
-        const p = light.addComponent(PointLight);
+        light.transform.position = new Vector3(0, 10, 0);
+        light.transform.lookAt(new Vector3(), new Vector3(1, 0, 0));
+        const p = light.addComponent(SpotLight);
+        p.enableShadow = true;
         p.distance = 100;
 
         init();
@@ -66,6 +68,7 @@ PhysXPhysics.init().then(() => {
                 color.g = Math.random();
                 color.b = Math.random();
                 color.a = 1.0;
+                mtl.baseColor = color;
 
                 const meshes: MeshRenderer[] = [];
                 hit.entity.getComponentsIncludeChildren(MeshRenderer, meshes);
@@ -102,7 +105,7 @@ PhysXPhysics.init().then(() => {
         function init() {
             const quat = new Quaternion(0, 0, 0.3, 0.7);
             quat.normalize();
-            addPlane(new Vector3(30, 0.1, 30), new Vector3, new Quaternion);
+            addPlane(new Vector3(30,30), new Vector3(0, 1, 0), new Quaternion);
             // eslint-disable-next-line no-plusplus
             for (let i = 0; i < 5; i++) {
                 // eslint-disable-next-line no-plusplus
@@ -126,13 +129,14 @@ PhysXPhysics.init().then(() => {
             planeEntity.layer = Layer.Layer1;
 
             const renderer = planeEntity.addComponent(MeshRenderer);
-            renderer.mesh = PrimitiveMesh.createCuboid(engine, size.x, size.y, size.z);
+            renderer.mesh = PrimitiveMesh.createPlane(engine, size.x, size.y);
             renderer.setMaterial(mtl);
+            renderer.receiveShadow = true;
             planeEntity.transform.position = position;
             planeEntity.transform.rotationQuaternion = rotation;
 
             const physicsPlane = new PlaneColliderShape();
-            physicsPlane.setPosition(0, size.y, 0);
+            physicsPlane.setPosition(0, 0.0, 0);
             const planeCollider = planeEntity.addComponent(StaticCollider);
             planeCollider.addShape(physicsPlane);
 
@@ -149,6 +153,7 @@ PhysXPhysics.init().then(() => {
 
             renderer.mesh = PrimitiveMesh.createCuboid(engine, size.x, size.y, size.z);
             renderer.setMaterial(mtl);
+            renderer.castShadow = true;
             boxEntity.transform.position = position;
             boxEntity.transform.rotationQuaternion = rotation;
 
@@ -171,6 +176,7 @@ PhysXPhysics.init().then(() => {
 
             renderer.mesh = PrimitiveMesh.createSphere(engine, radius);
             renderer.setMaterial(mtl);
+            renderer.castShadow = true;
             sphereEntity.transform.position = position;
             sphereEntity.transform.rotationQuaternion = rotation;
 
@@ -192,6 +198,7 @@ PhysXPhysics.init().then(() => {
 
             renderer.mesh = PrimitiveMesh.createCapsule(engine, radius, height, 20)
             renderer.setMaterial(mtl);
+            renderer.castShadow = true;
             capsuleEntity.transform.position = position;
             capsuleEntity.transform.rotationQuaternion = rotation;
 
