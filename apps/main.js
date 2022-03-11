@@ -12,4 +12,6 @@
 
 // import "./AtomicComputeApp"
 // import "./ClusterForwardApp"
-import "./MultiLightApp"
+// import "./MultiLightApp"
+
+import "./PhysXDynamicApp"
