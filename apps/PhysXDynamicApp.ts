@@ -62,7 +62,7 @@ PhysXPhysics.init().then(() => {
         window.addEventListener("mousedown", (event: MouseEvent) => {
             const ray = new Ray();
             cameraEntity.getComponent(Camera).screenPointToRay(
-                new Vector2(event.pageX * window.devicePixelRatio, event.pageY * window.devicePixelRatio), ray);
+                new Vector2(event.offsetX * window.devicePixelRatio, event.offsetY * window.devicePixelRatio), ray);
 
             const hit = new HitResult();
             const result = engine.physicsManager.raycast(ray, Number.MAX_VALUE, Layer.Layer0, hit);
@@ -110,7 +110,7 @@ PhysXPhysics.init().then(() => {
         function init() {
             const quat = new Quaternion(0, 0, 0.3, 0.7);
             quat.normalize();
-            addPlane(new Vector3(30,30), new Vector3(0, 1, 0), new Quaternion);
+            addPlane(new Vector2(30,30), new Vector3(0, 1, 0), new Quaternion);
             // eslint-disable-next-line no-plusplus
             for (let i = 0; i < 5; i++) {
                 // eslint-disable-next-line no-plusplus
@@ -125,7 +125,7 @@ PhysXPhysics.init().then(() => {
         }
 
         //--------------------------------------------------------------------------------------------------------------------
-        function addPlane(size: Vector3, position: Vector3, rotation: Quaternion): Entity {
+        function addPlane(size: Vector2, position: Vector3, rotation: Quaternion): Entity {
             const mtl = new BlinnPhongMaterial(engine);
             const baseColor = mtl.baseColor;
             baseColor.setValue(0.03179807202597362, 0.3939682161541871, 0.41177952549087604, 1);
