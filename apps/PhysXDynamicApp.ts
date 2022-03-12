@@ -23,11 +23,16 @@ import {OrbitControl} from "@arche-engine/controls";
 import {
     PhysXPhysics
 } from "@arche-engine/physics-physx";
+import {
+    PhysXDebugPhysics
+} from "@arche-engine/physics-physx-debug";
 
 PhysXPhysics.init().then(() => {
     const engine = new WebGPUEngine("canvas");
     engine.canvas.resizeByClientSize();
     engine.init(PhysXPhysics).then(() => {
+        // PhysXDebugPhysics.setEngine(engine);
+
         const scene = engine.sceneManager.activeScene;
         const rootEntity = scene.createRootEntity();
 
