@@ -14,6 +14,7 @@
 // import "./ClusterForwardApp"
 // import "./MultiLightApp"
 
-import "./ParticleApp"
+// import "./ParticleApp"
 
 // import "./PhysXDynamicApp"
+import "./PhysXCompoundApp"
